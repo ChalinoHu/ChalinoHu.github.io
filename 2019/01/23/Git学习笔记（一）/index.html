@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>HYM&#39;s blog</title>
+  <title>Git学习笔记（一） | HYM&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HYM&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="安装git1.1下载 GIT 并安装 网址(Windows系统)： https://git-scm.com/download/win 1.2安装后在命令行输入git version 有回复表示安装成功输入以下代码完成本地机器的注册 123$ git config --global user.name &amp;quot;Your Name&amp;quot;$ git config --global user.e">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git学习笔记（一）">
+<meta property="og:url" content="http://yoursite.com/2019/01/23/Git学习笔记（一）/index.html">
 <meta property="og:site_name" content="HYM&#39;s blog">
+<meta property="og:description" content="安装git1.1下载 GIT 并安装 网址(Windows系统)： https://git-scm.com/download/win 1.2安装后在命令行输入git version 有回复表示安装成功输入以下代码完成本地机器的注册 123$ git config --global user.name &amp;quot;Your Name&amp;quot;$ git config --global user.e">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-23T06:17:25.366Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HYM&#39;s blog">
+<meta name="twitter:title" content="Git学习笔记（一）">
+<meta name="twitter:description" content="安装git1.1下载 GIT 并安装 网址(Windows系统)： https://git-scm.com/download/win 1.2安装后在命令行输入git version 有回复表示安装成功输入以下代码完成本地机器的注册 123$ git config --global user.name &amp;quot;Your Name&amp;quot;$ git config --global user.e">
   
     <link rel="alternative" href="/atom.xml" title="HYM&#39;s blog" type="application/atom+xml">
   
@@ -148,16 +153,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Git学习笔记（一）" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+            <article id="post-Git学习笔记（一）" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/23/Git学习笔记（一）/">Git学习笔记（一）</a>
+    <h1 class="article-title" itemprop="name">
+      Git学习笔记（一）
     </h1>
   
 
@@ -173,9 +176,95 @@
         <h2 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h2><p>1.1下载 GIT 并安装 网址(Windows系统)： <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">https://git-scm.com/download/win</a></p>
 <p>1.2安装后在命令行输入git version 有回复表示安装成功输入以下代码完成本地机器的注册</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name&quot;</span><br><span class="line"></span><br><span class="line">$ git config --global user.email &quot;email@example.com&quot;</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2019/01/23/Git学习笔记（一）/#more">more >></a>
-        
+  <a id="more"></a>
+<h2 id="创建版本库"><a href="#创建版本库" class="headerlink" title="创建版本库"></a>创建版本库</h2><ol>
+<li>创建一个文件夹 mkdir <file> （默认 Administrator文件夹下 可使用 cd 命令改变当前根目录）</file></li>
+<li>初始化GIT仓库</li>
+</ol>
+<ul>
+<li>使用<code>git init</code> 会创建一个.git文件夹 .git文件夹即为生成的版本库</li>
+<li>若看不到该文件夹，可使用ls - ah命令查看 目录下文件夹</li>
+</ul>
+<h2 id="添加文件到gti仓库"><a href="#添加文件到gti仓库" class="headerlink" title="添加文件到gti仓库"></a>添加文件到gti仓库</h2><ul>
+<li>使用命令 <code>git add &lt;file&gt;</code>,注意可反复多次使用，添加多个文件</li>
+<li>使用命令 <code>git commit -m &lt;message&gt;</code> 完成（如 <code>git commit -m &quot;create a file&quot;</code></li>
+<li>使用<code>git status</code> 随时查看当前工作区状态</li>
+<li>如果想查看修改内容 <code>git diff</code></li>
+</ul>
+<h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><ul>
+<li>文件已经add到暂存区或者已经提交到本地版本库 <code>git reset</code></li>
+<li><code>git log</code> 查看历史版本<ul>
+<li>如果觉得文字太多在命令后面添加–pretty=oneline (<code>git log --pretty=oneline</code>)</li>
+<li>看到的一大串诸如 30ef78898b0 开头的是commit id (版本记录号)<ul>
+<li>回退上一版本 git reset –hard head^ 或者 <code>git reset --hard head~</code><ul>
+<li>GIT版本中使用 head 表示当前版本 上一个版本为HEAD^ ，上上个版本为HEAD^^,以此类推</li>
+</ul>
+</li>
+<li>回退上100个版本 <code>git reset --hard HEAD~100</code></li>
+<li>回退固定版本<ul>
+<li><code>git reflog</code> 查看命令历史版本</li>
+<li>找到版本ID b6e50d7…</li>
+<li><code>git reset --hard b6e50d</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="撤销修改-文件修改在工作区"><a href="#撤销修改-文件修改在工作区" class="headerlink" title="撤销修改 (文件修改在工作区)"></a>撤销修改 (文件修改在工作区)</h2><ul>
+<li>本地的文件还未add到暂存区</li>
+<li><code>git status</code> 查看当前编辑的文件状态</li>
+<li><code>git checkout -- &lt;file&gt;</code> 即可撤销当前文件的修改(<strong>注意空格！！！git[空格]checkout[空格]–[空格]<file></file></strong>）</li>
+</ul>
+<h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><ul>
+<li><code>git status</code> 查看状态</li>
+<li><code>git rm &lt;file&gt;</code> 将版本库中的文件删除</li>
+<li><code>git checkout -- &lt;file&gt;</code>如果不小心将文件删错了，版本库中还有保存文件可恢复</li>
+<li><code>git commit -m &quot;delect file&quot;</code> 向版本库提交，保持版本一致</li>
+</ul>
+<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><p>  7.1 打开Git Bash 输入 <code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</code> 生成SSH KEY</p>
+<p>  7.2 进入GitHub /settings/SSH and GPG Keys</p>
+<ul>
+<li>Title 栏下自定义标题</li>
+<li><p>将用户目录下.ssh文件夹下id_rsa.pub文件中的内容复制到 KEY</p>
+<p>7.3 添加远程库</p>
+</li>
+<li><p>登录GitHub 右上角<strong>Create a new repository</strong></p>
+</li>
+<li>在repository 处填上传文件夹的名字 测试的时候我的文件夹是git_dir</li>
+<li>其他保持默认设置 点击create repository 创建新的git 仓库</li>
+<li><code>git remote add origin git@github.com:ChalinoHu/git_dir.git</code>命令将本地库与远程库保持关联</li>
+<li>添加后远程库的名字即为origin</li>
+<li>第一次将本地文件推送到远程仓库 <code>git push -u origin</code><ul>
+<li><em>git push origin master</em>将本地的文件推送到远程库</li>
+<li><em>-u</em> 将本地分支和远程库的分支关联起来</li>
+</ul>
+</li>
+<li>后续推送使用 <code>git push</code> 即可</li>
+<li>从本地关联远程库<ul>
+<li><code>git remote add origin git@github.com:ChalinoHu/learngit.git</code></li>
+<li>本地关联一个远程库 origin</li>
+<li>通用的表示形式为@server-name:Path/repo-name.git<ul>
+<li><em>server-name</em> 服务器名一般用github</li>
+<li><em>Path</em> 服务器下的路径，github 上一般为自己的用户名</li>
+<li><em>repo-name</em> 仓库名</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>从远程仓库克隆（先有远程库，再创建本地库）<ul>
+<li>在github上创建一个新的仓库(repository)并Initialize，此时便自动给我们创建一个README.md文件</li>
+<li>在本地选择一个文件夹 <code>git clone git@github.com:Chalino/gitskill2.git</code><ul>
+<li><code>git clone</code> 克隆命令 后接地址</li>
+<li>SSH地址： <a href="mailto:*git@github.com" target="_blank" rel="noopener">*git@github.com</a>:Path/repo-name.git*</li>
+<li>http地址: 略</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
       
 
       
@@ -197,16 +286,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/23/Git学习笔记（一）/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/01/23/Git学习笔记（一）/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/18/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -226,79 +374,14 @@
 
 
 
-
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/18/hello-world/">Hello World</a>
-    </h1>
   
 
-        
-        <a href="/2019/01/18/hello-world/" class="archive-article-date">
-  	<time datetime="2019-01-18T12:24:09.535Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/18/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+  
 
   
+
   
 
 
@@ -321,8 +404,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
