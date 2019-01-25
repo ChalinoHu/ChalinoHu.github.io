@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>HYM&#39;s blog</title>
+  <title>UCOSIII 任务管理 | HYM&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HYM&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="一、UCOS中的任务的组成：1.任务堆栈块：上下文切换的时候用来保存任务的工作环境，即为STM32的内部寄存器值,在RAM中按照“先进先出（FIFO）”的原则组织的一块连续的存储空间，为满足任务切换和响应中断时保存CPU寄存器中的内容以及任务调用其他函数时的需要。">
+<meta name="keywords" content="UCOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UCOSIII 任务管理">
+<meta property="og:url" content="http://yoursite.com/2019/01/25/UCOSIII-任务管理/index.html">
 <meta property="og:site_name" content="HYM&#39;s blog">
+<meta property="og:description" content="一、UCOS中的任务的组成：1.任务堆栈块：上下文切换的时候用来保存任务的工作环境，即为STM32的内部寄存器值,在RAM中按照“先进先出（FIFO）”的原则组织的一块连续的存储空间，为满足任务切换和响应中断时保存CPU寄存器中的内容以及任务调用其他函数时的需要。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="c:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/1548419228654.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181203205621693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5qdW5saWFu,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="c:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/1548424796525.png">
+<meta property="og:updated_time" content="2019-01-25T14:40:30.941Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HYM&#39;s blog">
+<meta name="twitter:title" content="UCOSIII 任务管理">
+<meta name="twitter:description" content="一、UCOS中的任务的组成：1.任务堆栈块：上下文切换的时候用来保存任务的工作环境，即为STM32的内部寄存器值,在RAM中按照“先进先出（FIFO）”的原则组织的一块连续的存储空间，为满足任务切换和响应中断时保存CPU寄存器中的内容以及任务调用其他函数时的需要。">
+<meta name="twitter:image" content="c:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/1548419228654.png">
   
     <link rel="alternative" href="/atom.xml" title="HYM&#39;s blog" type="application/atom+xml">
   
@@ -148,16 +157,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-UCOSIII-任务管理" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+            <article id="post-UCOSIII-任务管理" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/25/UCOSIII-任务管理/">UCOSIII 任务管理</a>
+    <h1 class="article-title" itemprop="name">
+      UCOSIII 任务管理
     </h1>
   
 
@@ -171,9 +178,111 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="一、UCOS中的任务的组成："><a href="#一、UCOS中的任务的组成：" class="headerlink" title="一、UCOS中的任务的组成："></a>一、UCOS中的任务的组成：</h2><h3 id="1-任务堆栈块："><a href="#1-任务堆栈块：" class="headerlink" title="1.任务堆栈块："></a>1.任务堆栈块：</h3><p>上下文切换的时候用来保存任务的工作环境，即为STM32的内部寄存器值,在RAM中按照“先进先出（FIFO）”的原则组织的一块连续的存储空间，为满足任务切换和响应中断时保存CPU寄存器中的内容以及任务调用其他函数时的需要。</p>
-        
-          <a class="article-more-a" href="/2019/01/25/UCOSIII-任务管理/#more">more >></a>
-        
+<a id="more"></a>
+<h4 id="1-1创建任务堆栈："><a href="#1-1创建任务堆栈：" class="headerlink" title="1.1创建任务堆栈："></a>1.1创建任务堆栈：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> START_STK_SIZE 512</span></span><br><span class="line">CPU_STK START_TASK_STK[START_STK_SIZE]</span><br></pre></td></tr></table></figure>
+<p><code>CPU_STK</code>为<code>CPU_INT32U</code>类型，也就是<code>unsigned int</code>，大小为4字节，所以上述堆栈大小为512x4=2048字节</p>
+<h4 id="1-2堆栈初始化："><a href="#1-2堆栈初始化：" class="headerlink" title="1.2堆栈初始化："></a>1.2堆栈初始化：</h4><p>创建一个新任务时，需要将系统启动这个任务时所需的CPU各个寄存器初始值事先放在任务堆栈中。这样当任务获得CPU使用权时，就把任务堆栈内容复制到CPU各个寄存器，从而使任务顺利进行。</p>
+<p>堆栈初始化函数：<code>OSTaskStkInit()</code> 将CPU寄存器的值写进堆栈中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">CPU_STK  *<span class="title">OSTaskStkInit</span> <span class="params">(OS_TASK_PTR    p_task,</span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="keyword">void</span>          *p_arg,</span></span></span><br><span class="line"><span class="function"><span class="params">                         CPU_STK       *p_stk_base,</span></span></span><br><span class="line"><span class="function"><span class="params">                         CPU_STK       *p_stk_limit,</span></span></span><br><span class="line"><span class="function"><span class="params">                         CPU_STK_SIZE   stk_size,</span></span></span><br><span class="line"><span class="function"><span class="params">                         OS_OPT         opt)</span></span></span><br></pre></td></tr></table></figure>
+<p>用户一般不直接调用堆栈,由任务创建函数OSTaskCreat()调用。</p>
+<h4 id="1-3堆栈的使用"><a href="#1-3堆栈的使用" class="headerlink" title="1.3堆栈的使用"></a>1.3堆栈的使用</h4><p>任务堆栈的使用主要是作为任务创建函数OSTaskCreak()的参数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span>  <span class="title">OSTaskCreate</span> <span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">					OS_TCB        *p_tcb,			<span class="comment">//任务控制块</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    CPU_CHAR      *p_name,			<span class="comment">//任务名</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    OS_TASK_PTR    p_task,			<span class="comment">//任务函数</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">void</span>          *p_arg,			<span class="comment">//传递给任务函数的参数，一般为0</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    OS_PRIO        prio,			<span class="comment">//任务优先级</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    CPU_STK       *p_stk_base,		<span class="comment">//堆栈地址</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    CPU_STK_SIZE   stk_limit,		<span class="comment">//栈深</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="comment">//表示任务堆栈使用后剩余的容量少于一定值的时候我们认为堆栈已经使用完毕</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    CPU_STK_SIZE   stk_size,		<span class="comment">//堆栈大小</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    OS_MSG_QTY     q_size,			<span class="comment">//任务内部消息队列接受消息最大数，</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    								<span class="comment">//0 为禁止接受消息</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    OS_TICK        time_quanta,		<span class="comment">//使能时间片轮转时的时间长度</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    								<span class="comment">//0 为默认长度</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">void</span>          *p_ext,			<span class="comment">//用户补充的存储区</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    OS_OPT         opt,				<span class="comment">//任务选项</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    OS_ERR        *p_err			<span class="comment">//函数错误返回值</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    )</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>堆栈地址的增长方式分为向上增长方式和向下增长方式</p>
+<p>向上增长方式：堆栈的增长方向从低地址向高地址增长, 堆栈基地址为 <code>&amp;START_TASK_STK[0]</code></p>
+<p>向下增长方式：堆栈的增长方向从高地址向低地址增长, 堆栈基地址为<code>&amp;START_TASK_STK[START_STK_SIZE-1]</code></p>
+<h3 id="2-任务控制块：任务控制块用来记录各个任务的各个属性"><a href="#2-任务控制块：任务控制块用来记录各个任务的各个属性" class="headerlink" title="2.任务控制块：任务控制块用来记录各个任务的各个属性"></a>2.任务控制块：任务控制块用来记录各个任务的各个属性</h3><p>任务控制块是用来记录与任务相关信息的数据结构，每个人物都有自己的任务控制块。</p>
+<h4 id="2-1任务控制块的创建"><a href="#2-1任务控制块的创建" class="headerlink" title="2.1任务控制块的创建"></a>2.1任务控制块的创建</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">os_tcb</span>  <span class="title">OS_TCB</span>;</span></span><br><span class="line">OS_TCB StartTaskTCB    <span class="comment">//创建一个任务控制块</span></span><br></pre></td></tr></table></figure>
+<p>OS_TASK 是一个结构体，任务控制块的成员变量不能直接访问，更不能去改变它！</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">os_tcb</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    CPU_STK             *StkPtr;                            </span><br><span class="line">    <span class="keyword">void</span>                *ExtPtr;                            </span><br><span class="line">    CPU_STK             *StkLimitPtr</span><br><span class="line">    OS_TCB              *NextPtr; </span><br><span class="line">    OS_TCB              *Prev</span><br><span class="line">    ……			<span class="comment">//此处省略N个成员变量</span></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">if</span> OS_CFG_DBG_EN &gt; 0u</span></span><br><span class="line">    OS_TCB              *DbgPrevPtr;</span><br><span class="line">    OS_TCB              *DbgNextPtr;</span><br><span class="line">    CPU_CHAR            *DbgNamePtr;</span><br><span class="line"> <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2任务控制块的初始化"><a href="#2-2任务控制块的初始化" class="headerlink" title="2.2任务控制块的初始化"></a>2.2任务控制块的初始化</h4><p>任务控制块函数  <code>OS_TaskInitPCB()</code></p>
+<p>任务控制块的初始化和任务堆栈的初始化一样，不需要用户自己调用，在创建任务OSTaskCreak()的时候会调用函数OS_TaskInitTCB()对任务控制块进行初始化。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">OSTaskCreak(...)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    OS_TaskInitPCB(...);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-3任务就绪表"><a href="#2-3任务就绪表" class="headerlink" title="2.3任务就绪表"></a>2.3任务就绪表</h4><p><strong>优先级</strong>：UCOSIII中任务优先级数由宏 <code>OS_CFG_PRIO_MAX</code>来配置，数值越小，优先级越高，最低可用优先级是 <code>OS_CFG_PRIO_MAX-1</code> </p>
+<p><strong>就绪表</strong>：两部分组成</p>
+<ul>
+<li><p>优先级位映射表</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CPU_DATA OSPrioTbl[OS_PRIO_TBL_SIZE]</span><br></pre></td></tr></table></figure>
+<p>用来记录那个任务优先级下有任务就绪，CPU_DATA 是unsigned int 类型，有四个字节，32位，因此表每个参数有32位，每个位对应一个优先级，所以当系统有64个优先级的时候，OS_PRIO_TAL_SIZE = 2，2个字节，每个字节32位，一共64位，正好对应64个优先级</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用于找到就绪了的最高优先级的任务</span></span><br><span class="line"><span class="function">OS_PRIO  <span class="title">OS_PrioGetHighest</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    CPU_DATA  *p_tbl;</span><br><span class="line">    OS_PRIO    prio;</span><br><span class="line">    prio  = (OS_PRIO)<span class="number">0</span>;</span><br><span class="line">    p_tbl = &amp;OSPrioTbl[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span> (*p_tbl == (CPU_DATA)<span class="number">0</span>)				<span class="comment">//没有就绪则继续向下找</span></span><br><span class="line">    &#123;                   </span><br><span class="line">        prio += DEF_INT_CPU_NBR_BITS;                 </span><br><span class="line">        p_tbl++;</span><br><span class="line">    &#125;										   <span class="comment">//先找出最高优先级在位映射表中的位置</span></span><br><span class="line">    prio += (OS_PRIO)CPU_CntLeadZeros(*p_tbl); <span class="comment">//计算前导零，找到第一个不为零的位，即为已经就绪的最高级优先级位      </span></span><br><span class="line">    <span class="keyword">return</span> (prio);	<span class="comment">//两个结果计算后即为就绪最高优先级</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>就绪任务列表：用来记录哪个任务级下所有就绪的任务</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">OSRdyList[OS_CFG_PRIO_MAX]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span>  <span class="title">os_rdy_list</span> &#123;</span></span><br><span class="line">    OS_TCB              *HeadPtr;       <span class="comment">//头指针                    </span></span><br><span class="line">    OS_TCB              *TailPtr;       <span class="comment">//尾指针      </span></span><br><span class="line">    OS_OBJ_QTY           NbrEntries;    <span class="comment">//任务总数 </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>UCOSIII支持时间片轮转调度，因此在一个优先级下会有多个任务，那么我们就要对这些任务做一个管理，这里使用OSRdyList[]数组管理这些任务。OSRdyList[]数组中的每个元素对应一个优先级，每个优先级的下有多个任务，这些任务是通过链表来管理的，每个元素的都有一个头指针和一个尾指针，头指针指向链表头，尾指针指向了链表的尾部。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1548419228654.png" alt="1548419228654"></p>
+<p>同一优先级下多个任务在运行时永远是HeadPtr所指向的任务，HeadPtr指向的任务运行完后该任务会在</p>
+<h3 id="3-​任务函数：由用户编写的任务处理代码"><a href="#3-​任务函数：由用户编写的任务处理代码" class="headerlink" title="3.​任务函数：由用户编写的任务处理代码"></a>3.​任务函数：由用户编写的任务处理代码</h3><h2 id="二、任务函数模板："><a href="#二、任务函数模板：" class="headerlink" title="二、任务函数模板："></a>二、任务函数模板：</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">XXX_task</span><span class="params">(<span class="keyword">void</span> *p_arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//任务处理过程</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="三、UCOS系统任务"><a href="#三、UCOS系统任务" class="headerlink" title="三、UCOS系统任务"></a>三、UCOS系统任务</h2><ol>
+<li>空闲任务 ：系统自动创建而且必须创建的任务，中断优先级最低，在没有其他的任务运行时，系统运行此任务，保证系统一直运转</li>
+<li>时钟节拍任务：必须创建</li>
+<li>统计任务：可选任务，用来统计CPU使用率和各个任务的堆栈使用量，由 <code>OS_CFG_STAT_TASK_EN</code> 使能</li>
+<li>定时任务：可选任务，向用户提供定时服务，由 <code>OS_CFG_TMR_EN</code> 使能</li>
+<li>中断服务管理任务：可选任务，由 <code>OS_CFG_ISR_POST_DEFERRED_EN</code> 使能</li>
+</ol>
+<h2 id="四、UCOS任务状态"><a href="#四、UCOS任务状态" class="headerlink" title="四、UCOS任务状态"></a>四、UCOS任务状态</h2><ol>
+<li>休眠态：只是以代码的形式存在，但是不受UCOSIII管理，未分配任务控制块和任务堆栈</li>
+<li>就绪态：系统为任务分配任务控制块，并在就绪表中登记</li>
+<li>运行态：获得CPU使用权，正在运行</li>
+<li>等待态：正在运行的任务CPU使用权被剥夺，正在等待一段时间或者某个事件</li>
+<li>中断服务态：当发生中断时，正在运行的任务会被挂起转而去运行中断服务函数，此时任务状态为中断服务态</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20181203205621693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5qdW5saWFu,size_16,color_FFFFFF,t_70" alt="img"></p>
+<h2 id="五、时钟节拍与系统延时"><a href="#五、时钟节拍与系统延时" class="headerlink" title="五、时钟节拍与系统延时"></a>五、时钟节拍与系统延时</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">delay_init()</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> SYSTEM_SUPPORT_OS</span></span><br><span class="line">   u32 reload;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">   SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);	<span class="comment">//系统时钟8分频</span></span><br><span class="line">   fac_us = SystemCoreClock/<span class="number">8000000</span>;		<span class="comment">//SystemCoreClock = 72MHz</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> SYSTEM_SUPPORT_OS</span></span><br><span class="line">   reload = SystemCoreClock/<span class="number">8000000</span>;</span><br><span class="line">   reload *= <span class="number">1000000</span>/delay_ostickspersec;   <span class="comment">//delay_ostickspersec为系统节拍数 </span></span><br><span class="line">   											<span class="comment">//200Hz 5ms</span></span><br><span class="line">   fac_us = <span class="number">1000</span>/delay_ostickspersec;		<span class="comment">//fac_us为最小延时单位 5ms</span></span><br><span class="line">   	SysTick-&gt;CTRL|=SysTick_CTRL_TICKINT_Msk;   	<span class="comment">//开启SYSTICK中断</span></span><br><span class="line">	SysTick-&gt;LOAD=reload; 						<span class="comment">//每1/delay_ostickspersec秒中断一次	</span></span><br><span class="line">	SysTick-&gt;CTRL|=SysTick_CTRL_ENABLE_Msk;   	<span class="comment">//开启SYSTICK    </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">	fac_ms=(u16)fac_us*<span class="number">1000</span>;					<span class="comment">//非OS下,代表每个ms需要的systick时钟数   </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时钟（分频后时钟值）/delay_ostickspersec即为装载值  reload = （72000000/8）/200</p>
+<p>系统节拍数为5ms，那么最短调度时间为5ms，如果延时时间小于5ms则会使用delay_us((unsigned int) num)的普通延时方式，并且不会发生调度。</p>
+<h2 id="六、任务的调度"><a href="#六、任务的调度" class="headerlink" title="六、任务的调度"></a>六、任务的调度</h2><h3 id="6-1-可剥夺型任务调度"><a href="#6-1-可剥夺型任务调度" class="headerlink" title="6.1 可剥夺型任务调度"></a>6.1 可剥夺型任务调度</h3><p>任务级调度器：OSSched()</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span>  <span class="title">OSSched</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    CPU_SR_ALLOC();</span><br><span class="line"><span class="comment">//OSSched()为任务调度器，如果在中断服务中服务函数中则不能使用</span></span><br><span class="line"><span class="keyword">if</span> (OSIntNestingCtr &gt; (OS_NESTING_CTR)<span class="number">0</span>) &#123;              </span><br><span class="line">    <span class="keyword">return</span>;                                             </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断调度器是否上锁</span></span><br><span class="line"><span class="keyword">if</span> (OSSchedLockNestingCtr &gt; (OS_NESTING_CTR)<span class="number">0</span>) &#123;        </span><br><span class="line">    <span class="keyword">return</span>;                                            </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//关中断   </span></span><br><span class="line">CPU_INT_DIS();</span><br><span class="line"><span class="comment">//找到已就绪的最高优先级任务</span></span><br><span class="line">OSPrioHighRdy   = OS_PrioGetHighest();  </span><br><span class="line"><span class="comment">//从HeadPtr指向的任务开始执行</span></span><br><span class="line">OSTCBHighRdyPtr = OSRdyList[OSPrioHighRdy].HeadPtr;</span><br><span class="line"><span class="comment">//若为正在运行中的任务则不做任务切换</span></span><br><span class="line"><span class="keyword">if</span> (OSTCBHighRdyPtr == OSTCBCurPtr) &#123;    </span><br><span class="line">    <span class="comment">//开中断</span></span><br><span class="line">    CPU_INT_EN();                                       </span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> OS_CFG_TASK_PROFILE_EN &gt; 0u</span></span><br><span class="line">    OSTCBHighRdyPtr-&gt;CtxSwCtr++;                         </span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    OSTaskCtxSwCtr++;                                     </span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(OS_CFG_TLS_TBL_SIZE) &amp;&amp; (OS_CFG_TLS_TBL_SIZE &gt; 0u)</span></span><br><span class="line">    OS_TLS_TaskSw();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	<span class="comment">//执行任务切换</span></span><br><span class="line">    OS_TASK_SW();                                          	   <span class="comment">//开中断</span></span><br><span class="line">    CPU_INT_EN();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>中断级调度器：OSIntExit()</p>
+<p>UCOSIII中进入中断函数时需要临界保护<code>OSIntEnter()</code>，保证在执行中断服务函数的时候不发生任务的调度,执行完中断函数需要退出临界保护<code>OSIntExit()</code>，使得操作系统继续发生调度。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">XXX_IRQHandler</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">if</span> SYSTEM_SUPPORT_OS</span></span><br><span class="line">    	OSIntEnter();	<span class="comment">//使用UCOS操作系统</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    </span><br><span class="line">   	<span class="comment">//中断任务处理内容</span></span><br><span class="line">   	</span><br><span class="line">   	<span class="meta">#<span class="meta-keyword">if</span> SYSTEM_SUPPORT_OS</span></span><br><span class="line">   		OSIntExit();	<span class="comment">//退出中断，发生调度</span></span><br><span class="line">   	<span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-任务调度点"><a href="#6-2-任务调度点" class="headerlink" title="6.2 任务调度点"></a>6.2 任务调度点</h3><p><strong>能够引起任务产生调度的条件：</strong></p>
+<p>  1、释放信号量或者发送消息，也可通过配置相应的参数不发生任务调度。</p>
+<p>  2、<strong>使用延时函数OSTimeDly()或者OSTimeDlyHMSM()。</strong></p>
+<p>  3、任务等待的事情还没发生(等待信号量，消息队列等)。</p>
+<p>  4、任务取消等待。</p>
+<p>  5、<strong>创建任务。</strong></p>
+<p>  6、<strong>删除任务。</strong></p>
+<p>  7、删除一个内核对象。</p>
+<p>  8、任务改变自身的优先级或者其他任务的优先级。</p>
+<p>  9、<strong>任务通过调用OSTaskSuspend()将自身挂起。</strong></p>
+<p> 10、<strong>任务解挂某个挂起的任务。</strong></p>
+<p> 11、退出所有的嵌套中断。</p>
+<p> 12、通过OSSchedUnlock()给调度器解锁。</p>
+<p> 13、任务调用OSSchedRoundRobinYield()放弃其执行时间片。</p>
+<p> 14、<strong>用户调用OSSched()。</strong></p>
+<h3 id="6-3-调度器上锁和解锁"><a href="#6-3-调度器上锁和解锁" class="headerlink" title="6.3 调度器上锁和解锁"></a>6.3 调度器上锁和解锁</h3><p>当我们不希望发生任务调度，或者某些代码在执行过程中不能被打断就使用<code>OSSchedLock()</code>对调度器加锁，回复任务调度的时候课使用<code>OSSchedUnlock()</code>给已经上锁的任务调度器解锁。</p>
+<h3 id="6-4时间片轮转"><a href="#6-4时间片轮转" class="headerlink" title="6.4时间片轮转"></a>6.4时间片轮转</h3><p>UCOSIII允许同一个优先级下有多个任务，每个任务可以执行指定时间的时间片，然后轮到下一个任务，整个过程就是时间片轮转，而且在一个任务不想在运行的时候可以放弃其时间片</p>
+<p>时间片调度器：<code>OS_SchedRoundRobin()</code></p>
+<p>三个任务在同一优先级下，每个任务轮转的时间片数是4，task3开始获得时间片，运行两个时间片后放弃时间片，此时task1开始执行，时间片到则task2开始执行，再次时间片到发生调度，task3重新获得时间片,运行到两个时间片后又主动放弃时间片…</p>
+<table>
+<thead>
+<tr>
+<th><strong>任务</strong></th>
+<th><strong>时间片数</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Task2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Task3</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1548424796525.png" alt="1548424796525"></p>
+<h2 id="七、任务的切换"><a href="#七、任务的切换" class="headerlink" title="七、任务的切换"></a>七、任务的切换</h2><p>当UCOSIII需要切换到另一个任务时，它将保存当前任务的现场到任务堆栈中，其中主要是CPU寄存器的值，然后恢复新的现场并且执行新的任务。</p>
+<p><strong>任务级切换函数：</strong> OSCtxSw()</p>
+<p><strong>中断级切换函数：</strong> OSIntCtxSw()</p>
+<h2 id="八、系统初始化和启动"><a href="#八、系统初始化和启动" class="headerlink" title="八、系统初始化和启动"></a>八、系统初始化和启动</h2><p>使用UCOSIII之前必须先初始化UCOSIII，函数OSInit()必须在其他函数前调用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   OS_ERR err;</span><br><span class="line">   ……</span><br><span class="line">   <span class="comment">//外设初始化函数</span></span><br><span class="line">   hardware_init()</span><br><span class="line">   ……</span><br><span class="line">   OSInit(&amp;err);</span><br><span class="line">   ……</span><br><span class="line">   <span class="comment">//创建任务函数</span></span><br><span class="line">   OSTaskCreate();</span><br><span class="line">   ……</span><br><span class="line">   OSStart(&amp;err);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -195,16 +304,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/25/UCOSIII-任务管理/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/01/25/UCOSIII-任务管理/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/23/Git学习笔记（一）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Git学习笔记（一）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -224,86 +392,14 @@
 
 
 
-
   
-    <article id="post-Git学习笔记（一）" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/23/Git学习笔记（一）/">Git学习笔记（一）</a>
-    </h1>
   
 
-        
-        <a href="/2019/01/23/Git学习笔记（一）/" class="archive-article-date">
-  	<time datetime="2019-01-23T06:16:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h2><p>1.1下载 GIT 并安装 网址(Windows系统)： <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">https://git-scm.com/download/win</a></p>
-<p>1.2安装后在命令行输入git version 有回复表示安装成功输入以下代码完成本地机器的注册</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name&quot;</span><br><span class="line"></span><br><span class="line">$ git config --global user.email &quot;email@example.com&quot;</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2019/01/23/Git学习笔记（一）/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/23/Git学习笔记（一）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+  
 
   
+
   
 
 
@@ -326,8 +422,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
