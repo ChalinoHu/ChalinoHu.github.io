@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: git | HYM&#39;s blog</title>
+  <title>git学习笔记（二）——分支 | HYM&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HYM&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/git/index.html">
+  <meta name="description" content="创建分支  git checkout -b  创建并切换分支  git checkout 加上 -b 表示创建并切换，表示下面两条命令  git branch  创建分支 git checkout  切换分支     查看分支  git branch  分支名前带 * 表示当前分支">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git学习笔记（二）——分支">
+<meta property="og:url" content="http://yoursite.com/2019/01/28/git学习笔记（二）——分支/index.html">
 <meta property="og:site_name" content="HYM&#39;s blog">
+<meta property="og:description" content="创建分支  git checkout -b  创建并切换分支  git checkout 加上 -b 表示创建并切换，表示下面两条命令  git branch  创建分支 git checkout  切换分支     查看分支  git branch  分支名前带 * 表示当前分支">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-28T14:48:54.100Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HYM&#39;s blog">
+<meta name="twitter:title" content="git学习笔记（二）——分支">
+<meta name="twitter:description" content="创建分支  git checkout -b  创建并切换分支  git checkout 加上 -b 表示创建并切换，表示下面两条命令  git branch  创建分支 git checkout  切换分支     查看分支  git branch  分支名前带 * 表示当前分支">
   
     <link rel="alternative" href="/atom.xml" title="HYM&#39;s blog" type="application/atom+xml">
   
@@ -148,36 +153,143 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-git学习笔记（二）——分支" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      git学习笔记（二）——分支
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/28/git学习笔记（二）——分支/" class="archive-article-date">
+
+        
+        <a href="/2019/01/28/git学习笔记（二）——分支/" class="archive-article-date">
   	<time datetime="2019-01-28T14:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-28</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/28/git学习笔记（二）——分支/">git学习笔记（二）——分支</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>创建分支</p>
+<ul>
+<li><p>git checkout -b <branch-name> 创建并切换分支</branch-name></p>
+</li>
+<li><p>git checkout 加上 -b 表示创建并切换，表示下面两条命令</p>
+<ul>
+<li>git branch <branch-name> 创建分支</branch-name></li>
+<li>git checkout <branch-name> 切换分支</branch-name></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>查看分支</p>
+<ul>
+<li><p>git branch</p>
+</li>
+<li><p>分支名前带 * 表示当前分支</p>
+<a id="more"></a>
+</li>
+</ul>
+</li>
+<li><p>分支合并</p>
+<ul>
+<li><p>git merge <branch-name></branch-name></p>
+</li>
+<li><p>将指定的分支与当前分支合并 【快速前进模式，指针后移到最新版本…】</p>
+</li>
+</ul>
+</li>
+<li><p>删除分支</p>
+<p>git branch -d <branch-name></branch-name></p>
+</li>
+<li><p>分支冲突</p>
+<ul>
+<li><p>当一个分支A修改某文件A并commit 而在另一个分支B中也修改了文件并commit，若将两个分支合并则产生冲突</p>
+</li>
+<li><p>根据提示 产生冲突并需要手动解决再提交</p>
+</li>
+<li>git status 可查看对应信息</li>
+<li>修改的文件中也会出现提示信息 HEAD表示当前分支提交的内容 再后面是其他分支提交的内容</li>
+<li>修改好内容后 add 和 commit 再通过git merge <branch-name> 命令将分支合并到当前分支</branch-name></li>
+<li>git log 可查看分支合并情况 git log –graph – 和 graph 之间没有空格！</li>
+</ul>
+</li>
+<li><p>分支管理策略</p>
+<ul>
+<li><p>在默认情况下 git merge <branch-name> 将指定分支与当前分支合并 为Fast forward</branch-name></p>
+</li>
+<li><p>Fast forward 模式在删掉分支信息后就丢失了该分支信息，看不到分支的活动状态</p>
+</li>
+<li>git merge –no-ff -m “commit-discription” <branch-name><ul>
+<li>–no-ff 禁止使用Fast forward 模式</li>
+<li>-m “commit discription” -m表示一个新的提交，后面接提交描述信息commit-discription</li>
+</ul>
+</branch-name></li>
+<li>git log –graph –pretty=oneline –abbrev-commit 可查看分支提交信息【–abbrev和-commit之间没有空格！】</li>
+</ul>
+</li>
+<li><p>Bug分支处理</p>
+<ul>
+<li><p>当前工作区正在工作，add到暂存区但是还没有提交，需要修复BUG</p>
+</li>
+<li><p>git stash 将当前工作区的内容备份到git栈中</p>
+</li>
+<li>若需要在分支A中解决bug，切换到分支A</li>
+<li>创建临时分支iss-num并切换到iss-num</li>
+<li>解决bug后commit</li>
+<li>返回当前分支与iss-num分支合并 git merge –no-ff -m “fix the bug num” iss-num</li>
+<li>删除临时分支并提取保存到git栈中的内容<ul>
+<li>git stash pop 提取栈中的内容并清空gti栈</li>
+<li>git stash apply 提取栈 git stash drop 清空栈</li>
+<li>如果多次git stash 则<ul>
+<li>使用git stash list 查看压栈列表</li>
+<li>git stash apply stash@{0} 返回</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>丢弃一个没有合并过的分支 git branch -D <branch-name></branch-name></li>
+</ul>
+</li>
+<li><p>多地分支推送</p>
+<ul>
+<li><p>查看远程库的信息 git remote 返回远程仓库的默认名称</p>
+</li>
+<li><p>git remote -v 返回更详细的信息</p>
+</li>
+<li><p>推送分支</p>
+<ul>
+<li>git push 默认推送master分支</li>
+<li>git push origin <branch-name> 需要推送具体分支的消息 如：git push origin dev</branch-name></li>
+</ul>
+</li>
+<li>多人协作分支<ul>
+<li>先用 git pull origin <branch-name>推送自己的修改</branch-name></li>
+<li>如果推送失败，则因为远程分支比你的本地更新一些，先使用 git pull 尝试合并</li>
+<li>如果出现冲突，则先手动解决分支，并在本地提交</li>
+<li>无冲突后，再 git pull origin <branch-name> 就能提交成功</branch-name></li>
+<li>如果 git pull 提示 no tracking information ，则说明本地分支和远程分支没有创建连接，用命令 git branch –set-upstream-to <branch-name> origin/<branch-name></branch-name></branch-name></li>
+</ul>
+</li>
+<li>rebase（变基）<ul>
+<li>git rebase 将提交分支的历史变成一条直线</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -189,57 +301,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/01/28/git学习笔记（二）——分支/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/23/Git学习笔记（一）/" class="archive-article-date">
-  	<time datetime="2019-01-23T06:16:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-23</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/25/UCOSIII-任务管理/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">UCOSIII 任务管理</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/23/Git学习笔记（一）/">Git学习笔记（一）</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -262,9 +423,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
