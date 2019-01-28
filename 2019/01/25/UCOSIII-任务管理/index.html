@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="HYM&#39;s blog">
 <meta property="og:description" content="一、UCOS中的任务的组成：1.任务堆栈块：上下文切换的时候用来保存任务的工作环境，即为STM32的内部寄存器值,在RAM中按照“先进先出（FIFO）”的原则组织的一块连续的存储空间，为满足任务切换和响应中断时保存CPU寄存器中的内容以及任务调用其他函数时的需要。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="c:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/1548419228654.png">
+<meta property="og:image" content="d:/MyGithubBlogs/source/assert_image/1548416601019.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20181203205621693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5qdW5saWFu,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="c:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/1548424796525.png">
-<meta property="og:updated_time" content="2019-01-25T14:40:30.941Z">
+<meta property="og:updated_time" content="2019-01-28T18:34:57.348Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UCOSIII 任务管理">
 <meta name="twitter:description" content="一、UCOS中的任务的组成：1.任务堆栈块：上下文切换的时候用来保存任务的工作环境，即为STM32的内部寄存器值,在RAM中按照“先进先出（FIFO）”的原则组织的一块连续的存储空间，为满足任务切换和响应中断时保存CPU寄存器中的内容以及任务调用其他函数时的需要。">
-<meta name="twitter:image" content="c:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/1548419228654.png">
+<meta name="twitter:image" content="d:/MyGithubBlogs/source/assert_image/1548416601019.png">
   
     <link rel="alternative" href="/atom.xml" title="HYM&#39;s blog" type="application/atom+xml">
   
@@ -209,7 +209,7 @@
 <p>就绪任务列表：用来记录哪个任务级下所有就绪的任务</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">OSRdyList[OS_CFG_PRIO_MAX]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span>  <span class="title">os_rdy_list</span> &#123;</span></span><br><span class="line">    OS_TCB              *HeadPtr;       <span class="comment">//头指针                    </span></span><br><span class="line">    OS_TCB              *TailPtr;       <span class="comment">//尾指针      </span></span><br><span class="line">    OS_OBJ_QTY           NbrEntries;    <span class="comment">//任务总数 </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>UCOSIII支持时间片轮转调度，因此在一个优先级下会有多个任务，那么我们就要对这些任务做一个管理，这里使用OSRdyList[]数组管理这些任务。OSRdyList[]数组中的每个元素对应一个优先级，每个优先级的下有多个任务，这些任务是通过链表来管理的，每个元素的都有一个头指针和一个尾指针，头指针指向链表头，尾指针指向了链表的尾部。</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1548419228654.png" alt="1548419228654"></p>
+<p><img src="D:\MyGithubBlogs\source\assert_image\1548416601019.png" alt=""></p>
 <p>同一优先级下多个任务在运行时永远是HeadPtr所指向的任务，HeadPtr指向的任务运行完后该任务会在</p>
 <h3 id="3-​任务函数：由用户编写的任务处理代码"><a href="#3-​任务函数：由用户编写的任务处理代码" class="headerlink" title="3.​任务函数：由用户编写的任务处理代码"></a>3.​任务函数：由用户编写的任务处理代码</h3><h2 id="二、任务函数模板："><a href="#二、任务函数模板：" class="headerlink" title="二、任务函数模板："></a>二、任务函数模板：</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">XXX_task</span><span class="params">(<span class="keyword">void</span> *p_arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//任务处理过程</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="三、UCOS系统任务"><a href="#三、UCOS系统任务" class="headerlink" title="三、UCOS系统任务"></a>三、UCOS系统任务</h2><ol>
