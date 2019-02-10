@@ -17,9 +17,9 @@
 <meta property="og:description" content="一、UCOS中的任务的组成：1.任务堆栈块：上下文切换的时候用来保存任务的工作环境，即为STM32的内部寄存器值,在RAM中按照“先进先出（FIFO）”的原则组织的一块连续的存储空间，为满足任务切换和响应中断时保存CPU寄存器中的内容以及任务调用其他函数时的需要。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://github.com/ChalinoHu/ChalinoHu.github.io/blob/master/assert_image/1548424796525.png?raw=true">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20181203205621693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5qdW5saWFu,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://github.com/ChalinoHu/ChalinoHu.github.io/blob/master/assert_image/UCOSIII%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81.png?raw=true">
 <meta property="og:image" content="https://github.com/ChalinoHu/ChalinoHu.github.io/blob/master/assert_image/1548424796525.png?raw=true">
-<meta property="og:updated_time" content="2019-01-28T18:51:08.127Z">
+<meta property="og:updated_time" content="2019-02-10T05:35:30.109Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UCOSIII 任务管理">
 <meta name="twitter:description" content="一、UCOS中的任务的组成：1.任务堆栈块：上下文切换的时候用来保存任务的工作环境，即为STM32的内部寄存器值,在RAM中按照“先进先出（FIFO）”的原则组织的一块连续的存储空间，为满足任务切换和响应中断时保存CPU寄存器中的内容以及任务调用其他函数时的需要。">
@@ -220,13 +220,18 @@
 <li>中断服务管理任务：可选任务，由 <code>OS_CFG_ISR_POST_DEFERRED_EN</code> 使能</li>
 </ol>
 <h2 id="四、UCOS任务状态"><a href="#四、UCOS任务状态" class="headerlink" title="四、UCOS任务状态"></a>四、UCOS任务状态</h2><ol>
-<li>休眠态：只是以代码的形式存在，但是不受UCOSIII管理，未分配任务控制块和任务堆栈</li>
-<li>就绪态：系统为任务分配任务控制块，并在就绪表中登记</li>
-<li>运行态：获得CPU使用权，正在运行</li>
-<li>等待态：正在运行的任务CPU使用权被剥夺，正在等待一段时间或者某个事件</li>
-<li>中断服务态：当发生中断时，正在运行的任务会被挂起转而去运行中断服务函数，此时任务状态为中断服务态</li>
+<li><p>休眠态：只是以代码的形式存在，但是不受UCOSIII管理，未分配任务控制块和任务堆栈</p>
+</li>
+<li><p>就绪态：系统为任务分配任务控制块，并在就绪表中登记</p>
+</li>
+<li><p>运行态：获得CPU使用权，正在运行</p>
+</li>
+<li><p>等待态：正在运行的任务CPU使用权被剥夺，正在等待一段时间或者某个事件</p>
+</li>
+<li><p>中断服务态：当发生中断时，正在运行的任务会被挂起转而去运行中断服务函数，此时任务状态为中断服务态</p>
+</li>
 </ol>
-<p><img src="https://img-blog.csdnimg.cn/20181203205621693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5qdW5saWFu,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p><img src="https://github.com/ChalinoHu/ChalinoHu.github.io/blob/master/assert_image/UCOSIII%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81.png?raw=true" alt="UCOSIIIä&quot;&quot;å¡ç¶æ.png"></p>
 <h2 id="五、时钟节拍与系统延时"><a href="#五、时钟节拍与系统延时" class="headerlink" title="五、时钟节拍与系统延时"></a>五、时钟节拍与系统延时</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">delay_init()</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> SYSTEM_SUPPORT_OS</span></span><br><span class="line">   u32 reload;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">   SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);	<span class="comment">//系统时钟8分频</span></span><br><span class="line">   fac_us = SystemCoreClock/<span class="number">8000000</span>;		<span class="comment">//SystemCoreClock = 72MHz</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> SYSTEM_SUPPORT_OS</span></span><br><span class="line">   reload = SystemCoreClock/<span class="number">8000000</span>;</span><br><span class="line">   reload *= <span class="number">1000000</span>/delay_ostickspersec;   <span class="comment">//delay_ostickspersec为系统节拍数 </span></span><br><span class="line">   											<span class="comment">//200Hz 5ms</span></span><br><span class="line">   fac_us = <span class="number">1000</span>/delay_ostickspersec;		<span class="comment">//fac_us为最小延时单位 5ms</span></span><br><span class="line">   	SysTick-&gt;CTRL|=SysTick_CTRL_TICKINT_Msk;   	<span class="comment">//开启SYSTICK中断</span></span><br><span class="line">	SysTick-&gt;LOAD=reload; 						<span class="comment">//每1/delay_ostickspersec秒中断一次	</span></span><br><span class="line">	SysTick-&gt;CTRL|=SysTick_CTRL_ENABLE_Msk;   	<span class="comment">//开启SYSTICK    </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">	fac_ms=(u16)fac_us*<span class="number">1000</span>;					<span class="comment">//非OS下,代表每个ms需要的systick时钟数   </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>时钟（分频后时钟值）/delay_ostickspersec即为装载值  reload = （72000000/8）/200</p>
 <p>系统节拍数为5ms，那么最短调度时间为5ms，如果延时时间小于5ms则会使用delay_us((unsigned int) num)的普通延时方式，并且不会发生调度。</p>
