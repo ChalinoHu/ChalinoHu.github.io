@@ -245,6 +245,318 @@
 
 
   
+    <article id="post-C++基础/C++对象模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/C++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/">c++ 对象模型</a>
+    </h1>
+  
+
+        
+        <a href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/C++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
+  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、c-的构造函数"><a href="#1、c-的构造函数" class="headerlink" title="1、c++的构造函数"></a>1、c++的构造函数</h2><ul>
+<li>默认构造函数</li>
+<li>初始化构造函数（有参数）</li>
+<li>拷贝构造函数</li>
+<li>移动构造函数（move和右值引用）</li>
+<li>委托构造函数</li>
+<li>转换构造函数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Student</span>()&#123;<span class="comment">//默认构造函数，没有参数</span></span><br><span class="line">        <span class="keyword">this</span>-&gt;age = <span class="number">20</span>;</span><br><span class="line">        <span class="keyword">this</span>-&gt;num = <span class="number">1000</span>;</span><br><span class="line">    &#125;;  </span><br><span class="line">    <span class="built_in">Student</span>(<span class="type">int</span> a, <span class="type">int</span> n):<span class="built_in">age</span>(a), <span class="built_in">num</span>(n)&#123;&#125;; <span class="comment">//初始化构造函数，有参数和参数列表</span></span><br><span class="line">    <span class="built_in">Student</span>(<span class="type">const</span> Student&amp; s)&#123;<span class="comment">//拷贝构造函数，这里与编译器生成的一致</span></span><br><span class="line">        <span class="keyword">this</span>-&gt;age = s.age;</span><br><span class="line">        <span class="keyword">this</span>-&gt;num = s.num;</span><br><span class="line">    &#125;; </span><br><span class="line">    <span class="built_in">Student</span>(<span class="type">int</span> r)&#123;   <span class="comment">//转换构造函数,形参是其他类型变量，且只有一个形参</span></span><br><span class="line">        <span class="keyword">this</span>-&gt;age = r;</span><br><span class="line">		<span class="keyword">this</span>-&gt;num = <span class="number">1002</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    ~<span class="built_in">Student</span>()&#123;&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> age;</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student s1;</span><br><span class="line">    <span class="function">Student <span class="title">s2</span><span class="params">(<span class="number">18</span>,<span class="number">1001</span>)</span></span>;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">    <span class="function">Student <span class="title">s3</span><span class="params">(a)</span></span>;</span><br><span class="line">    <span class="function">Student <span class="title">s4</span><span class="params">(s3)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;s1 age:%d, num:%d\n&quot;</span>, s1.age, s1.num);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;s2 age:%d, num:%d\n&quot;</span>, s2.age, s2.num);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;s3 age:%d, num:%d\n&quot;</span>, s3.age, s3.num);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;s2 age:%d, num:%d\n&quot;</span>, s4.age, s4.num);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果</span></span><br><span class="line"><span class="comment">//s1 age:20, num:1000</span></span><br><span class="line"><span class="comment">//s2 age:18, num:1001</span></span><br><span class="line"><span class="comment">//s3 age:10, num:1002</span></span><br><span class="line"><span class="comment">//s2 age:10, num:1002</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2、什么情况下会调用拷贝构造函数"><a href="#2、什么情况下会调用拷贝构造函数" class="headerlink" title="2、什么情况下会调用拷贝构造函数"></a>2、什么情况下会调用拷贝构造函数</h2><ul>
+<li><p>用类的一个实例化对象去初始化另一个对象的时候</p>
+</li>
+<li><p>函数的参数是类的对象时（非引用传递）</p>
+</li>
+<li><p>函数的返回值是函数体内局部对象的类的对象时 ,此时虽然发生（Named return Value优化）NRV优化，但是由于返回方式是值传递，所以会在返回值的地方调用拷贝构造函数</p>
+</li>
+</ul>
+<p><strong>另：第三种情况在Linux g++ 下则不会发生拷贝构造函数，不仅如此即使返回局部对象的引用，依然不会发生拷贝构造函数</strong></p>
+<p><strong>总结就是：即使发生NRV优化的情况下，Linux+ g++的环境是不管值返回方式还是引用方式返回的方式都不会发生拷贝构造函数，而Windows + VS2019在值返回的情况下发生拷贝构造函数，引用返回方式则不发生拷贝构造函数</strong>。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">c++基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/C++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-C++基础/c++ 异常" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/c++%20%E5%BC%82%E5%B8%B8/">c++异常</a>
+    </h1>
+  
+
+        
+        <a href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/c++%20%E5%BC%82%E5%B8%B8/" class="archive-article-date">
+  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在程序执行过程中，由于程序员的疏忽或是系统资源紧张等因素都有可能导致异常，任何程序都无法保证绝对的稳定，常见的异常有：</p>
+<ul>
+<li>数组下标越界</li>
+<li>除法计算时除数为0</li>
+<li>动态分配空间时空间不足</li>
+<li>…</li>
+</ul>
+<p>如果不及时对这些异常进行处理，程序多数情况下都会崩溃。</p>
+<p><strong>（1）try、throw和catch关键字</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">double</span> m = <span class="number">1</span>, n = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;before dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> - <span class="number">1</span>;  <span class="comment">//抛出int型异常</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (m == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> - <span class="number">1.0</span>;  <span class="comment">//拋出 double 型异常</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            cout &lt;&lt; m / n &lt;&lt; endl;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;after dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">catch</span> (<span class="type">double</span> d) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;catch (double)&quot;</span> &lt;&lt; d &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">catch</span> (<span class="type">int</span> i)&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;catch (int)&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">catch</span> (...) &#123;   </span><br><span class="line">        <span class="comment">// 若被前面的捕捉int类型的异常捕捉到了之后该异常便不会再捕捉了</span></span><br><span class="line">        <span class="comment">// 异常只能被捕捉一次</span></span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;catch (...)&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果</span></span><br><span class="line"><span class="comment">//before dividing.</span></span><br><span class="line"><span class="comment">//catch ()-1</span></span><br><span class="line"><span class="comment">//finished</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>try-catch一次只能捕获一个异常</li>
+<li>所捕获的异常是可覆盖的，若统一捕获异常，只能捕获到最后一个异常</li>
+<li>解决方法：针对可能出现异常的地方，单独try-catch。</li>
+</ol>
+<p><strong>（2）函数的异常声明列表</strong></p>
+<p>有时候，程序员在定义函数的时候知道函数可能发生的异常，可以在函数声明和定义时，指出所能抛出异常的列表，写法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fun</span><span class="params">()</span> <span class="title">throw</span><span class="params">(<span class="type">int</span>,<span class="type">double</span>,A,B,C)</span></span>&#123;...&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这种写法表名函数可能会抛出int,double型或者A、B、C三种类型的异常，如果throw中为空，表明不会抛出任何异常，如果没有throw则可能抛出任何异常。</p>
+<p><strong>（3）C++标准异常类 exception</strong></p>
+<ul>
+<li><p>bad_typeid：使用typeid运算符，如果其操作数是一个多态类的指针，而该指针的值为 NULL，则会拋出此异常，例如：</p>
+<ul>
+<li><pre><code class="c++">#include &lt;iostream&gt;
+#include &lt;typeinfo&gt;
+using namespace std;
+
+class A&#123;
+public:
+  virtual ~A();
+&#125;;
+ 
+using namespace std;
+int main() &#123;
+    A* a = NULL;
+    try &#123;
+          cout &lt;&lt; typeid(*a).name() &lt;&lt; endl; // Error condition
+      &#125;
+    catch (bad_typeid)&#123;
+          cout &lt;&lt; &quot;Object is NULL&quot; &lt;&lt; endl;
+      &#125;
+    return 0;
+&#125;
+//运行结果：bject is NULL
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>bad_cast：在用 dynamic_cast 进行从多态基类对象（或引用）到派生类的引用的强制类型转换时(下行转换)，如果转换是不安全的，则会拋出此异常</p>
+</li>
+<li><p>bad_alloc：在用 new 运算符进行动态内存分配时，如果没有足够的内存，则会引发此异常。</p>
+</li>
+<li><p>out_of_range:用 vector 或 string的at 成员函数根据下标访问元素时，如果下标越界，则会拋出此异常。</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">c++基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/c++%20%E5%BC%82%E5%B8%B8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-C++基础/volatile、mutable和explicit关键字的用法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/volatile%E3%80%81mutable%E5%92%8Cexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%94%A8%E6%B3%95/">volatile、mutable和explicit关键字的用法</a>
+    </h1>
+  
+
+        
+        <a href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/volatile%E3%80%81mutable%E5%92%8Cexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%94%A8%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、volatile"><a href="#1、volatile" class="headerlink" title="1、volatile"></a>1、volatile</h2><h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p><code>volatile</code>关键字是一种类型修饰符，使用<code>volatile</code>声明的变量，<strong>系统总是重新从它所在的内存读取数据</strong>，而不是从寄存器的备份中读取。</p>
+<p>多线程中被几个任务共享的变量应该被定义为<code>volatile</code>类型。</p>
+<h3 id="volatile指针"><a href="#volatile指针" class="headerlink" title="volatile指针"></a>volatile指针</h3><p><code>volatile</code> 指针和 <code>const</code> 修饰词类似，<code>const</code> 有常量指针和指针常量的说法，<code>volatile</code> 也有相应的概念。对应<code>volatile</code>修饰的对象每次从内存中载入。</p>
+<h3 id="多线程下的volatile"><a href="#多线程下的volatile" class="headerlink" title="多线程下的volatile"></a>多线程下的volatile</h3><p>当两个线程都要用到某一个变量且该变量的值会被改变时，应该用volatile声明。<strong>该关键字的作用是防止优化编译器把变量从内存装入CPU寄存器中。</strong></p>
+<p>如果一个共享变量被装入寄存器，那么两个线程有可能一个使用内存中的变量，一个使用寄存器中的变量，这会造成程序的错误执行。volatile的意思是让编译器每次操作该变量时一定要从内存中真正取出，而不是使用已经存在寄存器中的值。</p>
+<h2 id="2、mutable"><a href="#2、mutable" class="headerlink" title="2、mutable"></a>2、mutable</h2><p>在C++中，mutable也是为了突破const的限制而设置的。被mutable修饰的变量，将永远处于可变的状态，即使在一个const函数中。如果类的成员函数不会改变对象的状态，那么这个成员函数一般会声明成const的。但是，有些时候，我们需要<strong>在const函数里面修改一些跟类状态无关的数据成员，那么这个函数就应该被mutable来修饰，并且放在函数后后面关键字位置</strong>。此时const成员函数中被mutable修饰的变量是可变的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">person1</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> m_A;</span><br><span class="line">	<span class="keyword">mutable</span> <span class="type">int</span> m_B;<span class="comment">//特殊变量 在常函数里值也可以被修改</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">     <span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">()</span> <span class="type">const</span><span class="comment">//在函数里不可修改this指针指向的值 常量指针</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">        m_A=<span class="number">10</span>;<span class="comment">//错误  不可修改值，this已经被修饰为常量指针</span></span><br><span class="line">        m_B=<span class="number">20</span>;<span class="comment">//正确</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">person2</span>&#123;</span><br><span class="line">	<span class="type">int</span> m_A;</span><br><span class="line">	<span class="keyword">mutable</span> <span class="type">int</span> m_B;<span class="comment">//特殊变量 在常函数里值也可以被修改</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">const</span> person2 p&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;<span class="comment">//修饰常对象 不可修改类成员的值</span></span><br><span class="line">	p.m_A=<span class="number">10</span>;<span class="comment">//错误，被修饰了指针常量</span></span><br><span class="line">	p.m_B=<span class="number">200</span>;<span class="comment">//正确，特殊变量，修饰了mutable</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3、explicit"><a href="#3、explicit" class="headerlink" title="3、explicit"></a>3、explicit</h2><p>explicit关键字用来修饰类的构造函数，被修饰的构造函数的类，不能发生相应的隐式类型转换，只能以<strong>显示的方式进行类型转换</strong></p>
+<ul>
+<li>explicit 关键字只能用于类内部的构造函数声明上</li>
+<li>explicit 关键字作用于单个参数的构造函数</li>
+<li>被explicit修饰的构造函数的类，<strong>不能发生相应的隐式类型转换</strong></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">c++基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/volatile%E3%80%81mutable%E5%92%8Cexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%94%A8%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>

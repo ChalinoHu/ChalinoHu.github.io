@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2022/5 | HYM学习博客</title>
+  <title>volatile、mutable和explicit关键字的用法 | HYM学习博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HYM学习博客">
-<meta property="og:url" content="http://example.com/archives/2022/05/page/6/index.html">
+  <meta name="description" content="1、volatilevolatilevolatile关键字是一种类型修饰符，使用volatile声明的变量，系统总是重新从它所在的内存读取数据，而不是从寄存器的备份中读取。 多线程中被几个任务共享的变量应该被定义为volatile类型。 volatile指针volatile 指针和 const 修饰词类似，const 有常量指针和指针常量的说法，volatile 也有相应的概念。对应volatil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="volatile、mutable和explicit关键字的用法">
+<meta property="og:url" content="http://example.com/2022/05/27/C++%E5%9F%BA%E7%A1%80/volatile%E3%80%81mutable%E5%92%8Cexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%94%A8%E6%B3%95/index.html">
 <meta property="og:site_name" content="HYM学习博客">
+<meta property="og:description" content="1、volatilevolatilevolatile关键字是一种类型修饰符，使用volatile声明的变量，系统总是重新从它所在的内存读取数据，而不是从寄存器的备份中读取。 多线程中被几个任务共享的变量应该被定义为volatile类型。 volatile指针volatile 指针和 const 修饰词类似，const 有常量指针和指针常量的说法，volatile 也有相应的概念。对应volatil">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-27T13:02:46.000Z">
+<meta property="article:modified_time" content="2022-06-05T11:22:37.952Z">
 <meta property="article:author" content="hym">
+<meta property="article:tag" content="c++基础">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="HYM学习博客" type="application/atom+xml">
@@ -150,405 +155,185 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-C++基础/volatile、mutable和explicit关键字的用法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      volatile、mutable和explicit关键字的用法
+    </h1>
+  
+
+        
+        <a href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/volatile%E3%80%81mutable%E5%92%8Cexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%94%A8%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、volatile"><a href="#1、volatile" class="headerlink" title="1、volatile"></a>1、volatile</h2><h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p><code>volatile</code>关键字是一种类型修饰符，使用<code>volatile</code>声明的变量，<strong>系统总是重新从它所在的内存读取数据</strong>，而不是从寄存器的备份中读取。</p>
+<p>多线程中被几个任务共享的变量应该被定义为<code>volatile</code>类型。</p>
+<h3 id="volatile指针"><a href="#volatile指针" class="headerlink" title="volatile指针"></a>volatile指针</h3><p><code>volatile</code> 指针和 <code>const</code> 修饰词类似，<code>const</code> 有常量指针和指针常量的说法，<code>volatile</code> 也有相应的概念。对应<code>volatile</code>修饰的对象每次从内存中载入。</p>
+<h3 id="多线程下的volatile"><a href="#多线程下的volatile" class="headerlink" title="多线程下的volatile"></a>多线程下的volatile</h3><p>当两个线程都要用到某一个变量且该变量的值会被改变时，应该用volatile声明。<strong>该关键字的作用是防止优化编译器把变量从内存装入CPU寄存器中。</strong></p>
+<p>如果一个共享变量被装入寄存器，那么两个线程有可能一个使用内存中的变量，一个使用寄存器中的变量，这会造成程序的错误执行。volatile的意思是让编译器每次操作该变量时一定要从内存中真正取出，而不是使用已经存在寄存器中的值。</p>
+<h2 id="2、mutable"><a href="#2、mutable" class="headerlink" title="2、mutable"></a>2、mutable</h2><p>在C++中，mutable也是为了突破const的限制而设置的。被mutable修饰的变量，将永远处于可变的状态，即使在一个const函数中。如果类的成员函数不会改变对象的状态，那么这个成员函数一般会声明成const的。但是，有些时候，我们需要<strong>在const函数里面修改一些跟类状态无关的数据成员，那么这个函数就应该被mutable来修饰，并且放在函数后后面关键字位置</strong>。此时const成员函数中被mutable修饰的变量是可变的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">person1</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> m_A;</span><br><span class="line">	<span class="keyword">mutable</span> <span class="type">int</span> m_B;<span class="comment">//特殊变量 在常函数里值也可以被修改</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">     <span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">()</span> <span class="type">const</span><span class="comment">//在函数里不可修改this指针指向的值 常量指针</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">        m_A=<span class="number">10</span>;<span class="comment">//错误  不可修改值，this已经被修饰为常量指针</span></span><br><span class="line">        m_B=<span class="number">20</span>;<span class="comment">//正确</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">person2</span>&#123;</span><br><span class="line">	<span class="type">int</span> m_A;</span><br><span class="line">	<span class="keyword">mutable</span> <span class="type">int</span> m_B;<span class="comment">//特殊变量 在常函数里值也可以被修改</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">const</span> person2 p&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;<span class="comment">//修饰常对象 不可修改类成员的值</span></span><br><span class="line">	p.m_A=<span class="number">10</span>;<span class="comment">//错误，被修饰了指针常量</span></span><br><span class="line">	p.m_B=<span class="number">200</span>;<span class="comment">//正确，特殊变量，修饰了mutable</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3、explicit"><a href="#3、explicit" class="headerlink" title="3、explicit"></a>3、explicit</h2><p>explicit关键字用来修饰类的构造函数，被修饰的构造函数的类，不能发生相应的隐式类型转换，只能以<strong>显示的方式进行类型转换</strong></p>
+<ul>
+<li>explicit 关键字只能用于类内部的构造函数声明上</li>
+<li>explicit 关键字作用于单个参数的构造函数</li>
+<li>被explicit修饰的构造函数的类，<strong>不能发生相应的隐式类型转换</strong></li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/19%20%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%AE%80%E6%98%93%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/19%20%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%AE%80%E6%98%93%E6%9C%8D%E5%8A%A1%E5%99%A8/">19 多进程简易服务器</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">c++基础</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/05/27/C++%E5%9F%BA%E7%A1%80/volatile%E3%80%81mutable%E5%92%8Cexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%94%A8%E6%B3%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/21%20TCP%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/c++%20%E5%BC%82%E5%B8%B8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          c++异常
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/21%20TCP%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/">21 TCP状态转换</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/22%20IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/22%20IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/">22 IO多路复用</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/23%20UDP%E9%80%9A%E4%BF%A1/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/23%20UDP%E9%80%9A%E4%BF%A1/">23 UDP通信</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/24%20%E5%B9%BF%E6%92%AD%E5%92%8C%E7%BB%84%E6%92%AD/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/24%20%E5%B9%BF%E6%92%AD%E5%92%8C%E7%BB%84%E6%92%AD/">24 广播和组播</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/26%20%E5%90%8C%E6%AD%A5%E4%B8%8E%E9%98%BB%E5%A1%9E/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/26%20%E5%90%8C%E6%AD%A5%E4%B8%8E%E9%98%BB%E5%A1%9E/">26 同步与阻塞</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/27%20IO%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/27%20IO%E6%A8%A1%E5%9E%8B/">27 UNIX五大IO模型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/25%20%E6%9C%AC%E5%9C%B0%E5%A5%97%E6%8E%A5%E5%AD%97/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/25%20%E6%9C%AC%E5%9C%B0%E5%A5%97%E6%8E%A5%E5%AD%97/">25 本地套接字</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/28%20%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/28%20%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%A8%A1%E5%BC%8F/">28 Reactor和Proactor</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/29%20%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/29%20%E7%BA%BF%E7%A8%8B%E6%B1%A0/">29 线程池</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2022/05/page/5/">&amp;laquo; Prev</a><a class="page-number" href="/archives/2022/05/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2022/05/page/4/">4</a><a class="page-number" href="/archives/2022/05/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/archives/2022/05/page/7/">7</a><a class="extend next" rel="next" href="/archives/2022/05/page/7/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -572,8 +357,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
