@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>volatile、mutable和explicit关键字的用法 | HYM学习博客</title>
+  <title>c++异常 | HYM学习博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1、volatilevolatilevolatile关键字是一种类型修饰符，使用volatile声明的变量，系统总是重新从它所在的内存读取数据，而不是从寄存器的备份中读取。 多线程中被几个任务共享的变量应该被定义为volatile类型。 volatile指针volatile 指针和 const 修饰词类似，const 有常量指针和指针常量的说法，volatile 也有相应的概念。对应volatil">
+  <meta name="description" content="在程序执行过程中，由于程序员的疏忽或是系统资源紧张等因素都有可能导致异常，任何程序都无法保证绝对的稳定，常见的异常有：  数组下标越界 除法计算时除数为0 动态分配空间时空间不足 …  如果不及时对这些异常进行处理，程序多数情况下都会崩溃。 （1）try、throw和catch关键字 123456789101112131415161718192021222324252627282930313233">
 <meta property="og:type" content="article">
-<meta property="og:title" content="volatile、mutable和explicit关键字的用法">
-<meta property="og:url" content="http://example.com/2022/05/27/C++%E5%9F%BA%E7%A1%80/volatile%E3%80%81mutable%E5%92%8Cexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:title" content="c++异常">
+<meta property="og:url" content="http://example.com/2022/06/05/C++%E5%9F%BA%E7%A1%80/c++%20%E5%BC%82%E5%B8%B8/index.html">
 <meta property="og:site_name" content="HYM学习博客">
-<meta property="og:description" content="1、volatilevolatilevolatile关键字是一种类型修饰符，使用volatile声明的变量，系统总是重新从它所在的内存读取数据，而不是从寄存器的备份中读取。 多线程中被几个任务共享的变量应该被定义为volatile类型。 volatile指针volatile 指针和 const 修饰词类似，const 有常量指针和指针常量的说法，volatile 也有相应的概念。对应volatil">
+<meta property="og:description" content="在程序执行过程中，由于程序员的疏忽或是系统资源紧张等因素都有可能导致异常，任何程序都无法保证绝对的稳定，常见的异常有：  数组下标越界 除法计算时除数为0 动态分配空间时空间不足 …  如果不及时对这些异常进行处理，程序多数情况下都会崩溃。 （1）try、throw和catch关键字 123456789101112131415161718192021222324252627282930313233">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-05-27T13:02:46.000Z">
-<meta property="article:modified_time" content="2022-06-05T11:22:37.952Z">
+<meta property="article:published_time" content="2022-06-05T11:07:38.034Z">
+<meta property="article:modified_time" content="2022-06-05T11:25:43.165Z">
 <meta property="article:author" content="hym">
 <meta property="article:tag" content="c++基础">
 <meta name="twitter:card" content="summary">
@@ -155,41 +155,82 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-C++基础/volatile、mutable和explicit关键字的用法" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-C++基础/c++ 异常" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      volatile、mutable和explicit关键字的用法
+      c++异常
     </h1>
   
 
         
-        <a href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/volatile%E3%80%81mutable%E5%92%8Cexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%94%A8%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
+        <a href="/2022/06/05/C++%E5%9F%BA%E7%A1%80/c++%20%E5%BC%82%E5%B8%B8/" class="archive-article-date">
+  	<time datetime="2022-06-05T11:07:38.034Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1、volatile"><a href="#1、volatile" class="headerlink" title="1、volatile"></a>1、volatile</h2><h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p><code>volatile</code>关键字是一种类型修饰符，使用<code>volatile</code>声明的变量，<strong>系统总是重新从它所在的内存读取数据</strong>，而不是从寄存器的备份中读取。</p>
-<p>多线程中被几个任务共享的变量应该被定义为<code>volatile</code>类型。</p>
-<h3 id="volatile指针"><a href="#volatile指针" class="headerlink" title="volatile指针"></a>volatile指针</h3><p><code>volatile</code> 指针和 <code>const</code> 修饰词类似，<code>const</code> 有常量指针和指针常量的说法，<code>volatile</code> 也有相应的概念。对应<code>volatile</code>修饰的对象每次从内存中载入。</p>
-<h3 id="多线程下的volatile"><a href="#多线程下的volatile" class="headerlink" title="多线程下的volatile"></a>多线程下的volatile</h3><p>当两个线程都要用到某一个变量且该变量的值会被改变时，应该用volatile声明。<strong>该关键字的作用是防止优化编译器把变量从内存装入CPU寄存器中。</strong></p>
-<p>如果一个共享变量被装入寄存器，那么两个线程有可能一个使用内存中的变量，一个使用寄存器中的变量，这会造成程序的错误执行。volatile的意思是让编译器每次操作该变量时一定要从内存中真正取出，而不是使用已经存在寄存器中的值。</p>
-<h2 id="2、mutable"><a href="#2、mutable" class="headerlink" title="2、mutable"></a>2、mutable</h2><p>在C++中，mutable也是为了突破const的限制而设置的。被mutable修饰的变量，将永远处于可变的状态，即使在一个const函数中。如果类的成员函数不会改变对象的状态，那么这个成员函数一般会声明成const的。但是，有些时候，我们需要<strong>在const函数里面修改一些跟类状态无关的数据成员，那么这个函数就应该被mutable来修饰，并且放在函数后后面关键字位置</strong>。此时const成员函数中被mutable修饰的变量是可变的。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">person1</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> m_A;</span><br><span class="line">	<span class="keyword">mutable</span> <span class="type">int</span> m_B;<span class="comment">//特殊变量 在常函数里值也可以被修改</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">     <span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">()</span> <span class="type">const</span><span class="comment">//在函数里不可修改this指针指向的值 常量指针</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">        m_A=<span class="number">10</span>;<span class="comment">//错误  不可修改值，this已经被修饰为常量指针</span></span><br><span class="line">        m_B=<span class="number">20</span>;<span class="comment">//正确</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">person2</span>&#123;</span><br><span class="line">	<span class="type">int</span> m_A;</span><br><span class="line">	<span class="keyword">mutable</span> <span class="type">int</span> m_B;<span class="comment">//特殊变量 在常函数里值也可以被修改</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">const</span> person2 p&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;<span class="comment">//修饰常对象 不可修改类成员的值</span></span><br><span class="line">	p.m_A=<span class="number">10</span>;<span class="comment">//错误，被修饰了指针常量</span></span><br><span class="line">	p.m_B=<span class="number">200</span>;<span class="comment">//正确，特殊变量，修饰了mutable</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="3、explicit"><a href="#3、explicit" class="headerlink" title="3、explicit"></a>3、explicit</h2><p>explicit关键字用来修饰类的构造函数，被修饰的构造函数的类，不能发生相应的隐式类型转换，只能以<strong>显示的方式进行类型转换</strong></p>
+        <p>在程序执行过程中，由于程序员的疏忽或是系统资源紧张等因素都有可能导致异常，任何程序都无法保证绝对的稳定，常见的异常有：</p>
 <ul>
-<li>explicit 关键字只能用于类内部的构造函数声明上</li>
-<li>explicit 关键字作用于单个参数的构造函数</li>
-<li>被explicit修饰的构造函数的类，<strong>不能发生相应的隐式类型转换</strong></li>
+<li>数组下标越界</li>
+<li>除法计算时除数为0</li>
+<li>动态分配空间时空间不足</li>
+<li>…</li>
+</ul>
+<p>如果不及时对这些异常进行处理，程序多数情况下都会崩溃。</p>
+<p><strong>（1）try、throw和catch关键字</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">double</span> m = <span class="number">1</span>, n = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;before dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> - <span class="number">1</span>;  <span class="comment">//抛出int型异常</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (m == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> - <span class="number">1.0</span>;  <span class="comment">//拋出 double 型异常</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            cout &lt;&lt; m / n &lt;&lt; endl;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;after dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">catch</span> (<span class="type">double</span> d) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;catch (double)&quot;</span> &lt;&lt; d &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">catch</span> (<span class="type">int</span> i)&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;catch (int)&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">catch</span> (...) &#123;   </span><br><span class="line">        <span class="comment">// 若被前面的捕捉int类型的异常捕捉到了之后该异常便不会再捕捉了</span></span><br><span class="line">        <span class="comment">// 异常只能被捕捉一次</span></span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;catch (...)&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果</span></span><br><span class="line"><span class="comment">//before dividing.</span></span><br><span class="line"><span class="comment">//catch ()-1</span></span><br><span class="line"><span class="comment">//finished</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>try-catch一次只能捕获一个异常</li>
+<li>所捕获的异常是可覆盖的，若统一捕获异常，只能捕获到最后一个异常</li>
+<li>解决方法：针对可能出现异常的地方，单独try-catch。</li>
+</ol>
+<p><strong>（2）函数的异常声明列表</strong></p>
+<p>有时候，程序员在定义函数的时候知道函数可能发生的异常，可以在函数声明和定义时，指出所能抛出异常的列表，写法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fun</span><span class="params">()</span> <span class="title">throw</span><span class="params">(<span class="type">int</span>,<span class="type">double</span>,A,B,C)</span></span>&#123;...&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这种写法表名函数可能会抛出int,double型或者A、B、C三种类型的异常，如果throw中为空，表明不会抛出任何异常，如果没有throw则可能抛出任何异常。</p>
+<p><strong>（3）C++标准异常类 exception</strong></p>
+<ul>
+<li><p>bad_typeid：使用typeid运算符，如果其操作数是一个多态类的指针，而该指针的值为 NULL，则会拋出此异常，例如：</p>
+<ul>
+<li><pre><code class="c++">#include &lt;iostream&gt;
+#include &lt;typeinfo&gt;
+using namespace std;
+
+class A&#123;
+public:
+  virtual ~A();
+&#125;;
+ 
+using namespace std;
+int main() &#123;
+    A* a = NULL;
+    try &#123;
+          cout &lt;&lt; typeid(*a).name() &lt;&lt; endl; // Error condition
+      &#125;
+    catch (bad_typeid)&#123;
+          cout &lt;&lt; &quot;Object is NULL&quot; &lt;&lt; endl;
+      &#125;
+    return 0;
+&#125;
+//运行结果：bject is NULL
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>bad_cast：在用 dynamic_cast 进行从多态基类对象（或引用）到派生类的引用的强制类型转换时(下行转换)，如果转换是不安全的，则会拋出此异常</p>
+</li>
+<li><p>bad_alloc：在用 new 运算符进行动态内存分配时，如果没有足够的内存，则会引发此异常。</p>
+</li>
+<li><p>out_of_range:用 vector 或 string的at 成员函数根据下标访问元素时，如果下标越界，则会拋出此异常。</p>
+</li>
 </ul>
 
       
@@ -281,7 +322,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/05/27/C++%E5%9F%BA%E7%A1%80/volatile%E3%80%81mutable%E5%92%8Cexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%94%A8%E6%B3%95/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/06/05/C++%E5%9F%BA%E7%A1%80/c++%20%E5%BC%82%E5%B8%B8/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -295,15 +336,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2022/05/27/C++%E5%9F%BA%E7%A1%80/c++%20%E5%BC%82%E5%B8%B8/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          c++异常
-        
-      </div>
-    </a>
   
+    <a href="/2022/06/05/C++%E5%9F%BA%E7%A1%80/C++%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">c++ 对象模型</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
