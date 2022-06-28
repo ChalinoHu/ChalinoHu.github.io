@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>28 记忆化搜索 | HYM学习博客</title>
+  <title>三个线程循环打印10次ABC | HYM学习博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="例题：滑雪给定一个 R 行 C 列的矩阵，表示一个矩形网格滑雪场。 矩阵中第 i 行第 j 列的点表示滑雪场的第 i 行第 j 列区域的高度。 一个人从滑雪场中的某个区域内出发，每次可以向上下左右任意一个方向滑动一个单位距离。 当然，一个人能够滑动到某相邻区域的前提是该区域的高度低于自己目前所在区域的高度。 下面给出一个矩阵作为例子： 123456789 1  2  3  4 516 17 18">
+  <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859#include &lt;bits&#x2F;stdc++.h&gt;#include &lt;thread&gt;#include &lt;condition_variable&gt;#in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="28 记忆化搜索">
-<meta property="og:url" content="http://example.com/2022/05/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/28%20%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/index.html">
+<meta property="og:title" content="三个线程循环打印10次ABC">
+<meta property="og:url" content="http://example.com/2022/06/28/%E4%B8%89%E4%B8%AA%E7%BA%BF%E7%A8%8B%E5%BE%AA%E7%8E%AF%E6%89%93%E5%8D%B010%E6%AC%A1ABC/index.html">
 <meta property="og:site_name" content="HYM学习博客">
-<meta property="og:description" content="例题：滑雪给定一个 R 行 C 列的矩阵，表示一个矩形网格滑雪场。 矩阵中第 i 行第 j 列的点表示滑雪场的第 i 行第 j 列区域的高度。 一个人从滑雪场中的某个区域内出发，每次可以向上下左右任意一个方向滑动一个单位距离。 当然，一个人能够滑动到某相邻区域的前提是该区域的高度低于自己目前所在区域的高度。 下面给出一个矩阵作为例子： 123456789 1  2  3  4 516 17 18">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859#include &lt;bits&#x2F;stdc++.h&gt;#include &lt;thread&gt;#include &lt;condition_variable&gt;#in">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-05-27T13:39:13.000Z">
-<meta property="article:modified_time" content="2022-06-05T07:28:19.482Z">
+<meta property="article:published_time" content="2022-06-28T14:38:45.802Z">
+<meta property="article:modified_time" content="2022-06-28T14:40:59.860Z">
 <meta property="article:author" content="hym">
-<meta property="article:tag" content="算法基础">
+<meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="HYM学习博客" type="application/atom+xml">
@@ -155,62 +155,28 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-算法基础/28 记忆化搜索" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-三个线程循环打印10次ABC" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      28 记忆化搜索
+      三个线程循环打印10次ABC
     </h1>
   
 
         
-        <a href="/2022/05/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/28%20%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:39:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
+        <a href="/2022/06/28/%E4%B8%89%E4%B8%AA%E7%BA%BF%E7%A8%8B%E5%BE%AA%E7%8E%AF%E6%89%93%E5%8D%B010%E6%AC%A1ABC/" class="archive-article-date">
+  	<time datetime="2022-06-28T14:38:45.802Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="例题：滑雪"><a href="#例题：滑雪" class="headerlink" title="例题：滑雪"></a>例题：滑雪</h3><p>给定一个 R 行 C 列的矩阵，表示一个矩形网格滑雪场。</p>
-<p>矩阵中第 i 行第 j 列的点表示滑雪场的第 i 行第 j 列区域的高度。</p>
-<p>一个人从滑雪场中的某个区域内出发，每次可以向上下左右任意一个方向滑动一个单位距离。</p>
-<p>当然，一个人能够滑动到某相邻区域的前提是该区域的高度低于自己目前所在区域的高度。</p>
-<p>下面给出一个矩阵作为例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> 1  2  3  4 5</span><br><span class="line"></span><br><span class="line">16 17 18 19 6</span><br><span class="line"></span><br><span class="line">15 24 25 20 7</span><br><span class="line"></span><br><span class="line">14 23 22 21 8</span><br><span class="line"></span><br><span class="line">13 12 11 10 9</span><br></pre></td></tr></table></figure>
+        <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;condition_variable&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line">mutex m;</span><br><span class="line">condition_variable cv;</span><br><span class="line"><span class="type">bool</span> p1 = <span class="literal">true</span>, p2 = <span class="literal">false</span>, p3 = <span class="literal">false</span>;</span><br><span class="line"><span class="type">int</span> cnt1 = <span class="number">10</span>, cnt2 = <span class="number">10</span>, cnt3 = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printA</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (cnt1)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">unique_lock&lt;mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">        cv.<span class="built_in">wait</span>(lock, []()&#123;<span class="keyword">return</span> p1;&#125;);</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;A&quot;</span> &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        cnt1--;</span><br><span class="line">        p1 = <span class="literal">false</span>, p2 = <span class="literal">true</span>, p3 = <span class="literal">false</span>;</span><br><span class="line">        cv.<span class="built_in">notify_all</span>();</span><br><span class="line">        this_thread::<span class="built_in">sleep_for</span>(chrono::<span class="built_in">seconds</span>(<span class="number">2</span>)); <span class="comment">//延时</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printB</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (cnt2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">unique_lock&lt;mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">        cv.<span class="built_in">wait</span>(lock, []()&#123;<span class="keyword">return</span> p2;&#125;);</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;B&quot;</span> &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        cnt2--;</span><br><span class="line">        p1 = <span class="literal">false</span>, p2 = <span class="literal">false</span>, p3 = <span class="literal">true</span>;</span><br><span class="line">        cv.<span class="built_in">notify_all</span>();</span><br><span class="line">        this_thread::<span class="built_in">sleep_for</span>(chrono::<span class="built_in">seconds</span>(<span class="number">2</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printC</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (cnt3)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">unique_lock&lt;mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">        cv.<span class="built_in">wait</span>(lock, []()&#123;<span class="keyword">return</span> p3;&#125;);</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;C&quot;</span> &lt;&lt; endl;</span><br><span class="line">        cnt3--;</span><br><span class="line">        p1 = <span class="literal">true</span>, p2 = <span class="literal">false</span>, p3 = <span class="literal">false</span>;</span><br><span class="line">        cv.<span class="built_in">notify_all</span>();        </span><br><span class="line">        this_thread::<span class="built_in">sleep_for</span>(chrono::<span class="built_in">seconds</span>(<span class="number">2</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">​    <span class="function">thread <span class="title">t1</span><span class="params">(printA)</span>, <span class="title">t2</span><span class="params">(printB)</span>, <span class="title">t3</span><span class="params">(printC)</span></span>;</span><br><span class="line">​    t1.<span class="built_in">join</span>();</span><br><span class="line">​    t2.<span class="built_in">join</span>();</span><br><span class="line">​    t3.<span class="built_in">join</span>();</span><br><span class="line">​    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>在给定矩阵中，一条可行的滑行轨迹为 24−17−2−1。</p>
-<p>在给定矩阵中，最长的滑行轨迹为 25−24−23−…−3−2−1，沿途共经过 25 个区域。</p>
-<p>现在给定你一个二维矩阵表示滑雪场各区域的高度，请你找出在该滑雪场中能够完成的最长滑雪轨迹，并输出其长度(可经过最大区域数)。</p>
-<h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含两个整数 R 和 C。</p>
-<p>接下来 R 行，每行包含 C 个整数，表示完整的二维矩阵。</p>
-<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>输出一个整数，表示可完成的最长滑雪长度。</p>
-<h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1≤R,C≤300,<br>0≤矩阵中整数≤10000</p>
-<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5 5</span><br><span class="line">1 2 3 4 5</span><br><span class="line">16 17 18 19 6</span><br><span class="line">15 24 25 20 7</span><br><span class="line">14 23 22 21 8</span><br><span class="line">13 12 11 10 9</span><br></pre></td></tr></table></figure>
-
-<h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">25</span><br></pre></td></tr></table></figure>
-
-<p>简要思路</p>
-<ul>
-<li><p>动态规划</p>
-<ul>
-<li><p>状态表示<code>f[i][j]</code></p>
-<ul>
-<li>集合：所有从(i, j)开始滑的路径</li>
-<li>属性：所有路径的最大长度； max</li>
-</ul>
-</li>
-<li><p>状态计算：</p>
-<ul>
-<li>&#96;&#96;&#96;<br>f[i, j] &#x3D; max(f[i + 1, j], f[i - 1, j], f[i, j + 1], f[i, j - 1]) + 1;<br>需要保证max中的四个状态存在的条件是周边四个点的高度要比h[i, j]低<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```c++</span><br><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int N = 310;</span><br><span class="line">int h[N][N];</span><br><span class="line">int f[N][N];</span><br><span class="line">int n, m;</span><br><span class="line"></span><br><span class="line">int dx[4] = &#123;1, -1, 0, 0&#125;, dy[4] = &#123;0, 0, 1, -1&#125;;</span><br><span class="line"></span><br><span class="line">int dp(int x, int y)&#123;</span><br><span class="line">    </span><br><span class="line">    int &amp;v = f[x][y];</span><br><span class="line">    if (v != -1) return v;</span><br><span class="line">    </span><br><span class="line">    v = 1;</span><br><span class="line">    for (int i = 0; i &lt; 4; i++)&#123;</span><br><span class="line">        int a = x + dx[i], b = y + dy[i];</span><br><span class="line">        if (0 &lt;= a &amp;&amp; a &lt; n &amp;&amp; 0 &lt;= b &amp;&amp; b &lt; m &amp;&amp; h[x][y] &gt; h[a][b])&#123;</span><br><span class="line">            v = max(v, dp(a, b) + 1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    </span><br><span class="line">    for (int i = 0; i &lt; n; i++)&#123;</span><br><span class="line">        for (int j = 0; j &lt; m; j++)&#123;</span><br><span class="line">            cin &gt;&gt; h[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    memset(f, -1, sizeof f);</span><br><span class="line">    int res = 0;</span><br><span class="line">    for (int i = 0; i &lt; n; i++)&#123;</span><br><span class="line">        for (int j = 0; j &lt; m; j++)&#123;</span><br><span class="line">            res = max(res, dp(i, j));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; res &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 
       
 
@@ -245,7 +211,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">算法基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
         		</li>
       		
 		</ul>
@@ -301,7 +267,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/05/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/28%20%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/06/28/%E4%B8%89%E4%B8%AA%E7%BA%BF%E7%A8%8B%E5%BE%AA%E7%8E%AF%E6%89%93%E5%8D%B010%E6%AC%A1ABC/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -315,18 +281,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2022/05/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/27%20%E6%A0%91%E5%BD%A2DP/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          27 树形DP
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/05/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/29%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">29 树与二叉树</div>
+    <a href="/2022/06/05/C++%E5%9F%BA%E7%A1%80/c++%20%E5%BC%82%E5%B8%B8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">c++异常</div>
       <i class="icon-circle-right"></i>
     </a>
   
