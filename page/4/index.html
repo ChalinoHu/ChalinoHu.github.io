@@ -152,6 +152,136 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-算法基础/24 计数类DP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/05/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/24%20%E8%AE%A1%E6%95%B0%E7%B1%BBDP/">24 计数DP</a>
+    </h1>
+  
+
+        
+        <a href="/2022/05/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/24%20%E8%AE%A1%E6%95%B0%E7%B1%BBDP/" class="archive-article-date">
+  	<time datetime="2022-05-27T13:39:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="例题：整数划分"><a href="#例题：整数划分" class="headerlink" title="例题：整数划分"></a>例题：整数划分</h2><p>一个正整数 n 可以表示成若干个正整数之和，形如：n&#x3D;n1+n2+…+nk，其中 n1≥n2≥…≥nk,k≥1。</p>
+<p>我们将这样的一种表示称为正整数 n 的一种划分。</p>
+<p>现在给定一个正整数 n，请你求出 n 共有多少种不同的划分方法。</p>
+<p><strong>输入格式</strong></p>
+<p>共一行，包含一个整数 n。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，包含一个整数，表示总划分数量。</p>
+<p>由于答案可能很大，输出结果请对 10^9+7 取模。</p>
+<p><strong>数据范围</strong></p>
+<p>1≤n≤1000</p>
+<p><strong>输入样例</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7</span><br></pre></td></tr></table></figure>
+
+<h3 id="简要思路（一）："><a href="#简要思路（一）：" class="headerlink" title="简要思路（一）："></a>简要思路（一）：</h3><p>完全背包问题：</p>
+<ul>
+<li><p>状态表示<code>f[i][j]</code></p>
+<ul>
+<li>集合：所有从1到i中选，和为j的选法</li>
+<li>属性：选法的数量</li>
+</ul>
+</li>
+<li><p>状态计算</p>
+<ul>
+<li>&#96;&#96;&#96;<br>f[i][j] &#x3D; f[i-1][j]+f[i-1][j-i]+f[i-1][j-2<em>i]+…+f[i-1][j-s</em>i]	# 选择i的选法个数<br>f[i][j-i]&#x3D;			f[i-1][j-i]+f[i-1][j-2<em>i]+…+f[i-1][j-s</em>i]	# 选择一次i的选法个数，这里的s是一样的，因为都要满足两个式子都要满足j-s*i&gt;&#x3D;0<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+f[i][j] &#x3D; f[i][j - i] + f[i - 1][j]<br>状态压缩转换为：<br>f[j] &#x3D; f[j] + f[j - i]<br>滚动数组, j从小到大遍历<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 代码</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int N = 1010, mod = 1e9 + 7;</span><br><span class="line">int f[N], n;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    f[0] = 1;</span><br><span class="line">    for (int i = 1; i &lt;= n; i++)&#123;</span><br><span class="line">        for (int j = i; j &lt;= n; j++)&#123;</span><br><span class="line">            f[j] = (f[j] + f[j - i]) % mod;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; f[n] &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="简要思路（二）"><a href="#简要思路（二）" class="headerlink" title="简要思路（二）"></a>简要思路（二）</h3><ul>
+<li>动态规划：<ul>
+<li>状态表示<code>f[i][j]</code><ul>
+<li>集合：表示所有总和是i，并且恰好表示成j个数的和的方案</li>
+<li>属性：数量</li>
+</ul>
+</li>
+<li>状态计算：<br><code>f[i][j]</code>可以通过两种状态得到：<ul>
+<li>表示的j个数最小值为1<ul>
+<li>这个集合减去一个1，那么状态可以表示成<code>f[i - 1][j - 1]</code></li>
+</ul>
+</li>
+<li>表示的j个数中最小值大于1<ul>
+<li>集合中的每个数都减去一个1，那么状态可以表示成<code>f[i - j,j]</code>每个数都减去一个1，但是集合的个数不变</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>状态方程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f[i][j] = f[i - 1][j -1] + f[i - j][j]</span><br><span class="line">ans = f[n, 1] + f[n, 2] + f[n, 3] + ... + f[n, n]</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1010</span>, mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="type">int</span> f[N][N], n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= i; j++)&#123;</span><br><span class="line">            f[i][j] = (f[i - <span class="number">1</span>][j - <span class="number">1</span>] + f[i - j][j]) % mod;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) ans = (ans +f[n][i]) % mod;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">算法基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/05/27/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/24%20%E8%AE%A1%E6%95%B0%E7%B1%BBDP/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-算法基础/25 数位统计类DP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1314,114 +1444,6 @@
 
 
   
-    <article id="post-linux环境编程笔记/04 Makefile" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/04%20Makefile/">04 Makefile</a>
-    </h1>
-  
-
-        
-        <a href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/04%20Makefile/" class="archive-article-date">
-  	<time datetime="2022-05-27T13:02:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h1><p>[TOC]</p>
-<h3 id="文件命名："><a href="#文件命名：" class="headerlink" title="文件命名："></a>文件命名：</h3><p>Makefie的文件命名：makefile或者Makefile</p>
-<h3 id="Makefile规则："><a href="#Makefile规则：" class="headerlink" title="Makefile规则："></a>Makefile规则：</h3><p>一个Makefile文件可以有一个或多个规则</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">目标：依赖</span><br><span class="line"></span><br><span class="line">	命令（shell）</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 例如</span></span><br><span class="line"><span class="section">app:main.c add.c sub.c mult.c div.c</span></span><br><span class="line">	gcc main.c add.c sub.c mult.c div.c -o app</span><br></pre></td></tr></table></figure>
-
-<p>Makefile中的其他规则都是为第一条规则服务的。当make解释器发现依赖中的文件不存在时，会向下执行执行其他的规则并找到所需的依赖。</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">app:main.o add.o sub.o mult.o div.o</span></span><br><span class="line">	gcc main.o add.o sub.o mult.o div.o -o app</span><br><span class="line"><span class="section">main.o:main.c</span></span><br><span class="line">	gcc main.c -o main.o</span><br><span class="line"><span class="section">add.o:add.c</span></span><br><span class="line">	gcc add.c -o add.o</span><br><span class="line"><span class="section">sub.o:sub.c</span></span><br><span class="line">	gcc sub.c -o sub.o</span><br><span class="line"><span class="section">mult.o:mult.c</span></span><br><span class="line">	gcc mult.c -o mult.o</span><br><span class="line"><span class="section">div.o:div.c</span></span><br><span class="line">	gcc div.c -o div.o</span><br></pre></td></tr></table></figure>
-
-<p>make解释器在执行规则时会比较依赖和目标的时间戳，若依赖的时间戳比目标的时间戳晚，那么make程序将会执行含有依赖的规则</p>
-<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><h4 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h4><p>变量名&#x3D;变量值	var&#x3D;hello</p>
-<h4 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h4><p><code>AR</code>:归档默认程序名称，默认<code>ar</code></p>
-<p><code>CC</code>：C编译器名称，默认为<code>cc</code></p>
-<p><code>CXX</code>：C++编译器的名称，默认为<code>g++</code></p>
-<p><code>$@</code>：目标的完整名称</p>
-<p><code>$&lt;</code>：第一个依赖文件的名称</p>
-<p><code>$^</code>：所有的依赖文件</p>
-<p>获取变量的值 <code>$(变量名)</code></p>
-<h4 id="自动变量只能在规则的命令中使用"><a href="#自动变量只能在规则的命令中使用" class="headerlink" title="自动变量只能在规则的命令中使用"></a>自动变量只能在规则的命令中使用</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">app:main.c add.c sub.c mult.c div.c</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">src=main.c add.c sub.c mult.c div.c</span><br><span class="line">target=app</span><br><span class="line"><span class="variable">$(target)</span>:<span class="variable">$(src)</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(src)</span> -o <span class="variable">$(target)</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">%.o:%.c</span></span><br></pre></td></tr></table></figure>
-
-<p>其中%是通配符，表示匹配一个字符串，两个<code>%</code>表示匹配同一个字符串，例如上述中冒号前匹配的字符串和冒号后匹配的字符串是同一个，可能匹配到<code>main.c:main.o</code>，但是不会匹配到<code>main.c:add.o</code></p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">main.o:main.c</span></span><br><span class="line">	gcc main.c -o main.o</span><br><span class="line"><span class="section">add.o:add.c</span></span><br><span class="line">	gcc add.c -o add.o</span><br><span class="line"><span class="section">sub.o:sub.c</span></span><br><span class="line">	gcc sub.c -o sub.o</span><br><span class="line"><span class="section">mult.o:mult.c</span></span><br><span class="line">	gcc mult.c -o mult.o</span><br><span class="line"><span class="section">div.o:div.c</span></span><br><span class="line">	gcc div.c -o div.o</span><br><span class="line"></span><br><span class="line"><span class="comment">#可采用通配符来重写</span></span><br><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">	<span class="variable">$(CC)</span> -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><h5 id="wildcard"><a href="#wildcard" class="headerlink" title="wildcard"></a>wildcard</h5><p>使用：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取当前目录下所有后缀以.c结尾的文件列表，并用空格隔开</span></span><br><span class="line">src=<span class="variable">$(<span class="built_in">wildcard</span> ./*c)</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="patsubst"><a href="#patsubst" class="headerlink" title="patsubst"></a>patsubst</h5><p>使用：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字符串的替换，将src中以.c结尾的字符串替换为.o结尾的字符串</span></span><br><span class="line"><span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o,<span class="variable">$(src)</span>)</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">main.o:main.c</span></span><br><span class="line">	gcc main.c -o main.o</span><br><span class="line"><span class="section">add.o:add.c</span></span><br><span class="line">	gcc add.c -o add.o</span><br><span class="line"><span class="section">sub.o:sub.c</span></span><br><span class="line">	gcc sub.c -o sub.o</span><br><span class="line"><span class="section">mult.o:mult.c</span></span><br><span class="line">	gcc mult.c -o mult.o</span><br><span class="line"><span class="section">div.o:div.c</span></span><br><span class="line">	gcc div.c -o div.o</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
-
-<p>若使用函数来写，可表示为：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取当前目录下的.c文件</span></span><br><span class="line">src=<span class="variable">$(<span class="built_in">wildcard</span> ./*.c)</span></span><br><span class="line"><span class="comment">#将.c的匹配模式替换成.o</span></span><br><span class="line">objs=<span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, <span class="variable">$(src)</span>)</span></span><br><span class="line">target=app</span><br><span class="line"><span class="variable">$(target)</span>:<span class="variable">$(objs)</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">	<span class="variable">$(CC)</span> -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># clean是一个伪目标，就不会生成特定的clean文件，make工具不会进行更新检查</span></span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>:clean</span></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm <span class="variable">$(objs)</span></span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">linux环境编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/05/27/linux%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/04%20Makefile/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/">Next &amp;raquo;</a>
@@ -1532,6 +1554,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">算法基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">C++基础</a>
               </li>
             
             <div class="clearfix"></div>
